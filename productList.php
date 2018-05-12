@@ -1,3 +1,4 @@
+
 <table border='1'>
 	<th>Product Name</th>
 	<th>Stock Number</th>

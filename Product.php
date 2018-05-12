@@ -21,14 +21,18 @@ class Product
 	}
 
 	public function insertProduct()
-	{
-		
+	{		
 		$insertQuery = $this->con->prepare('INSERT INTO product(name, stock, date_input) 
 							VALUES(:product, :stock, :date)');
 
-		$insertQuery->execute(['product'=>$this->post['product'], 'stock'=>$this->post['stock'], 'date'=>$this->post['date']]);
+		// die(var_dump($this->post));
 
-		$_POST = [];
+		if(!empty($this->post))
+		{
+			$insertQuery->execute(['product'=>$this->post['product'], 'stock'=>$this->post['stock'], 'date'=>$this->post['date']]);
+
+			$this->post = [];	
+		}
 		
 	}
 

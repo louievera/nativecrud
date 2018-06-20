@@ -13,7 +13,7 @@
 			<td><?=$item['stock']?></td>
 			<td><?=$item['date_input']?></td>
 			<td>
-				<a href='?id=<?=$item["id"]?>&action=delete'>Delete</a>|
+				<a href='?id=<?=$item["id"]?>&action=delete' onclick='return confirm("Are you sure?")'>Delete</a>|
 				<a href='?id=<?=$item["id"]?>&action=edit'>Edit</a>
 			</td>
 		</tr>

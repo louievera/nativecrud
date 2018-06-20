@@ -4,65 +4,47 @@ class Product
 {
 	public function __construct()
 	{
-		include('connection.php');
-
-		$this->con = $con;
-
-		if(!empty($_POST))
-		{
-			$post = ["product"	=> $_POST['product_name'],
-					 "stock" 	=> $_POST['stock_number'],
-					 "date" 	=> $_POST['date']
-					];
-
-			$this->post = $post;	
-		}
-		
+		require('DB.php');
+		$this->db = new DB;
 	}
 
 	public function insertProduct()
-	{		
-		$insertQuery = $this->con->prepare('INSERT INTO product(name, stock, date_input) 
-							VALUES(:product, :stock, :date)');
-
-		// die(var_dump($this->post));
-
-		if(!empty($this->post))
+	{	
+		if(!empty($_POST))
 		{
-			$insertQuery->execute(['product'=>$this->post['product'], 'stock'=>$this->post['stock'], 'date'=>$this->post['date']]);
-
-			$this->post = [];	
-		}
-		
+			$sql = 'INSERT INTO product(name, stock, date_input) 
+					VALUES("'.$_POST['product_name'].'", "'.$_POST['stock_number'].'", "'.$_POST['date'].'")';
+			$this->db->exec($sql);
+		}		
 	}
 
 	public function getProductList()
 	{
-		$stmt = $this->con->query('SELECT * FROM product');
-		return $stmt->fetchAll();
+		$query = 'SELECT * FROM product';
+		return $this->db->selectAll($query);
 	}
 
 	public function deleteProduct($id)
 	{
-		$stmt = $this->con->query('DELETE FROM product WHERE id ='.$id);
+		$sql = 'DELETE FROM product WHERE id = '.$id;
+		$stmt = $this->db->exec($sql);
 	}
 
 	public function getProduct($id)
 	{
-		$stmt = $this->con->query('SELECT * FROM product WHERE id='.$id);
-
-		return $stmt->fetch();
+		$stmt = $this->db->select('SELECT * FROM product WHERE id='.$id);
+		return $stmt;
 	}
 
 	public function updateProduct($id)
 	{
 		$query = "UPDATE product
-				  SET name ='".$this->post['product']."',
-				  stock ='".$this->post['stock']."',
-				  date_input ='".$this->post['date']."' 
+				  SET name ='".$_POST['product_name']."',
+				  stock ='".$_POST['stock_number']."',
+				  date_input ='".$_POST['date']."' 
 				  WHERE id = '".$id."'";
 
-		$stmt = $this->con->query($query);
+		$stmt = $this->db->exec($query);
 		$_POST = [];
 
 

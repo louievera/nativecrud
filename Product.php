@@ -8,13 +8,17 @@ class Product
 		$this->db = new DB;
 	}
 
+	
 	public function insertProduct()
 	{	
+		$date = date("Y-m-d",strtotime($_POST['date']));
+		$data = ['name' 		=> $_POST['product_name'],
+				 'stock' 		=> $_POST['stock_number'],
+				 'date_input' 	=> $date
+				];
 		if(!empty($_POST))
 		{
-			$sql = 'INSERT INTO product(name, stock, date_input) 
-					VALUES("'.$_POST['product_name'].'", "'.$_POST['stock_number'].'", "'.$_POST['date'].'")';
-			$this->db->exec($sql);
+			$this->db->insert('product',$data);
 		}		
 	}
 

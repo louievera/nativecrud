@@ -12,9 +12,10 @@ class DB
 		$this->con = new PDO("mysql:host=;dbname=$dbname", $user, $pass);
 	}
 
-	public function selectAll($sql)
+	public function selectAll($table)
 	{
-		$res = $this->con->query($sql);
+		$que = "SELECT * FROM ".$table;
+		$res = $this->con->query($que);
 		return $res->fetchAll();
 	}
 

@@ -1,24 +1,23 @@
 
-<table border='1'>
-	<th>Product Name</th>
-	<th>Stock Number</th>
-	<th>Date</th>
-
-	<?php
-	foreach($list as $item)
-	{
-		?>
-		<tr>
-			<td><?=$item['name']?></td>
-			<td><?=$item['stock']?></td>
-			<td><?=$item['date_input']?></td>
-			<td>
-				<a href='?id=<?=$item["id"]?>&action=delete' onclick='return confirm("Are you sure?")'>Delete</a>|
-				<a href='?id=<?=$item["id"]?>&action=edit'>Edit</a>
-			</td>
-		</tr>
-		
-		<?php
-	}
-	?>
+<table id='products' class='display'>
+	<thead>
+		<th>Product Name</th>
+		<th>Stock Number</th>
+		<th>Date</th>
+	</thead>
 </table>
+
+<script>
+	$(document).ready(function(){
+		$('#products').DataTable(
+		{
+			"ajax": "productApi.php",
+			"columns":[
+				{"data": "name"},
+				{"data": "stock"},
+				{"data": "date_input"}],
+			"bLengthChange": false,
+			"order": [[0,"asc"]]
+		})
+	});
+</script>

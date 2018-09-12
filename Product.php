@@ -24,8 +24,8 @@ class Product
 
 	public function getProductList()
 	{
-		$query = 'SELECT * FROM product';
-		return $this->db->selectAll($query);
+		$table = 'product';
+		return $this->db->selectAll($table);
 	}
 
 	public function deleteProduct($id)

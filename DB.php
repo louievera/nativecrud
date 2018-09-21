@@ -9,7 +9,13 @@ class DB
 		$dbname = "test";
 		$user 	= "root";
 		$pass 	= "";
-		$this->con = new PDO("mysql:host=;dbname=$dbname", $user, $pass);
+		try{
+			$this->con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$this->con = new PDO("mysql:host=;dbname=$dbname", $user, $pass);			
+		}
+		catch(PDOException $e){
+			die($e->getMessage());
+		}
 	}
 
 	public function selectAll($table)
